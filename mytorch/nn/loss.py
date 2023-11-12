@@ -17,11 +17,11 @@ class MSELoss:
 
         self.A = A
         self.Y = Y
-        self.N = self.A.shape[0] # TODO
-        self.C = self.A.shape[1]  # TODO
-        se = (np.subtract(self.A,self.Y))*(np.subtract(self.A,self.Y))  # TODO
-        sse = (np.ones((self.N,1)).T)@se@np.ones((self.C,1)) # TODO
-        mse = sse/(2*self.N*self.C)  # TODO
+        self.N = self.A.shape[0] 
+        self.C = self.A.shape[1]  
+        se = (np.subtract(self.A,self.Y))*(np.subtract(self.A,self.Y))  
+        sse = (np.ones((self.N,1)).T)@se@np.ones((self.C,1)) 
+        mse = sse/(2*self.N*self.C) 
 
         print('mse =',mse)
         # print('se',se.shape)
@@ -31,7 +31,7 @@ class MSELoss:
 
     def backward(self):
 
-        dLdA = np.subtract(self.A,self.Y)/(self.N*self.C) #TODO
+        dLdA = np.subtract(self.A,self.Y)/(self.N*self.C) 
 
         return dLdA.astype(dtype='f')
 
@@ -50,26 +50,25 @@ class CrossEntropyLoss:
         """
         self.A = A
         self.Y = Y
-        N = self.A.shape[0]  # TODO
-        C = self.A.shape[1]  # TODO
+        N = self.A.shape[0] 
+        C = self.A.shape[1] 
 
-        Ones_C = np.ones((C,1))  # TODO
-        Ones_N = np.ones((N,1))  # TODO
-
-        self.softmax = np.array([np.exp(i)/sum(np.exp(i)) for i in self.A]) # TODO
+        Ones_C = np.ones((C,1))
+        Ones_N = np.ones((N,1))
+        self.softmax = np.array([np.exp(i)/sum(np.exp(i)) for i in self.A]) 
         
         print('Y',self.Y.shape)
         print('softmax',self.softmax.shape)
         print('Ones C',Ones_C.shape)
-        crossentropy = -1*(self.Y*np.log(self.softmax))@Ones_C # TODO
-        sum_crossentropy = np.dot(Ones_N.T,crossentropy) # TODO
+        crossentropy = -1*(self.Y*np.log(self.softmax))@Ones_C 
+        sum_crossentropy = np.dot(Ones_N.T,crossentropy) 
         L = sum_crossentropy / N
 
         return L
 
     def backward(self):
 
-        dLdA = self.softmax-self.Y  # TODO
+        dLdA = self.softmax-self.Y  
         return dLdA
 
 
@@ -81,8 +80,6 @@ class Criterion(object):
     """
     Interface for loss functions.
     """
-
-    # Nothing needs done to this class, it's used by the following Criterion classes
 
     def __init__(self):
         self.logits = None
@@ -109,7 +106,6 @@ class SoftmaxCrossEntropy(Criterion):
 
     def forward(self, x, y):
         """
-        TODO: Implement this function similar to how you did for HW1P1 or HW2P1.
         Argument:
             x (np.array): (batch size, 10)
             y (np.array): (batch size, 10)
@@ -127,7 +123,7 @@ class SoftmaxCrossEntropy(Criterion):
 
         self.softmax= np.array([np.exp(i)/np.sum(np.exp(i)) for i in self.logits])
         self.cross_entropy = -1*(self.labels*np.log(self.softmax))@Ones_C
-        sum_crossentropy = np.dot(Ones_N.T,self.cross_entropy) # TODO
+        sum_crossentropy = np.dot(Ones_N.T,self.cross_entropy) 
         self.loss = sum_crossentropy / N
         
 
