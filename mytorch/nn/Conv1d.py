@@ -1,6 +1,3 @@
-# Do not import any additional 3rd party external libraries as they will not
-# be available to AutoLab and are not needed (or allowed)
-
 import numpy as np
 from resampling import *
 
@@ -8,7 +5,7 @@ from resampling import *
 class Conv1d_stride1():
     def __init__(self, in_channels, out_channels, kernel_size,
                  weight_init_fn=None, bias_init_fn=None):
-        # Do not modify this method
+        
         self.in_channels = in_channels
         self.out_channels = out_channels
         self.kernel_size = kernel_size
@@ -59,8 +56,8 @@ class Conv1d_stride1():
         Return:
             dLdA (np.array): (batch_size, in_channels, input_size)
         """
-        self.dLdb=np.sum(np.sum(dLdZ,axis=0),axis=1)         # TODO
-        self.dLdA = np.zeros(self.A.shape,dtype='float64')  # TODO
+        self.dLdb=np.sum(np.sum(dLdZ,axis=0),axis=1)         
+        self.dLdA = np.zeros(self.A.shape,dtype='float64')  
         
         #convolution for dLdW
         for i in range(self.W.shape[2]):
@@ -96,8 +93,8 @@ class Conv1d():
         self.stride = stride
 
         # Initialize Conv1d() and Downsample1d() isntance
-        self.conv1d_stride1 = Conv1d_stride1(in_channels,out_channels,kernel_size,weight_init_fn=None, bias_init_fn=None) # TODO
-        self.downsample1d = Downsample1d(self.stride)  # TODO
+        self.conv1d_stride1 = Conv1d_stride1(in_channels,out_channels,kernel_size,weight_init_fn=None, bias_init_fn=None) 
+        self.downsample1d = Downsample1d(self.stride) 
 
     def forward(self, A):
         """
@@ -108,10 +105,9 @@ class Conv1d():
         """
 
         # Call Conv1d_stride1
-        # TODO
         F = self.conv1d_stride1.forward(A)
         # downsample
-        Z = self.downsample1d.forward(F)  # TODO
+        Z = self.downsample1d.forward(F)  
 
         return Z
 
@@ -123,9 +119,8 @@ class Conv1d():
             dLdA (np.array): (batch_size, in_channels, input_size)
         """
         # Call downsample1d backward
-        # TODO
         B = self.downsample1d.backward(dLdZ)
         # Call Conv1d_stride1 backward
-        dLdA = self.conv1d_stride1.backward(B)  # TODO
+        dLdA = self.conv1d_stride1.backward(B)  
 
         return dLdA
