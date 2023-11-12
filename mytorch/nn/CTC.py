@@ -139,9 +139,6 @@ class CTC(object):
         S, T = len(extended_symbols), len(logits)
         beta = np.zeros(shape=(T, S))
         beta_hat = np.zeros((T,S))
-        # -------------------------------------------->
-        # TODO
-        # <--------------------------------------------
         beta_hat[T-1,S-1]=logits[T-1,extended_symbols[S-1]]
         beta_hat[T-1,S-2]=logits[T-1,extended_symbols[S-2]]
         for t in range(T-2,-1,-1):
