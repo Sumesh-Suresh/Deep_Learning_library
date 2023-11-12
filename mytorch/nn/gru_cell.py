@@ -87,9 +87,7 @@ class GRUCell(object):
         self.x = x
         self.hidden = h_prev_t
         
-        # Add your code here.
-        # Define your variables based on the writeup using the corresponding
-        # names below.
+        
         self.r = self.r_act(self.Wrx@self.x+self.brx+self.Wrh@self.hidden+self.brh)
         self.z = self.z_act(self.Wzx@self.x+self.bzx+self.Wzh@self.hidden+self.bzh)
         self.n = self.h_act(self.Wnx@self.x+self.bnx+self.r*(self.Wnh@self.hidden+self.bnh))
@@ -104,7 +102,6 @@ class GRUCell(object):
         assert h_t.shape == (self.h,) # h_t is the final output of you GRU cell.
 
         return h_t
-        # raise NotImplementedError
 
     def backward(self, delta):
         """GRU cell backward.
@@ -133,11 +130,7 @@ class GRUCell(object):
         # 2) Transpose all calculated dWs...
         # 3) Compute all of the derivatives
         # 4) Know that the autograder grades the gradients in a certain order, and the
-        #    local autograder will tell you which gradient you are currently failing.
-
-        # ADDITIONAL TIP:
-        # Make sure the shapes of the calculated dWs and dbs  match the
-        # initalized shapes accordingly
+       
         self.x= np.reshape(self.x,(self.d,1))
         self.hidden = np.reshape(self.hidden,(self.h,1))
         self.r = np.reshape(self.r,(self.h,1))
@@ -192,4 +185,4 @@ class GRUCell(object):
         assert dh_prev_t.shape == (1, self.h)
 
         return dx, dh_prev_t
-        # raise NotImplementedError
+       
