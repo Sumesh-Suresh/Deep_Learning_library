@@ -1,7 +1,5 @@
 import numpy as np
 
-# TODO: Implement this code similar to how you did for HW1P1 or HW2P1.
-
 class Linear:
 
     def __init__(self, in_features, out_features, debug=False):
@@ -19,19 +17,19 @@ class Linear:
         self.A = A
         self.N = A.shape[0]
         self.Ones = np.ones((self.N, 1), dtype="f")
-        Z = self.A@(self.W).T + self.Ones@(self.b).T   # TODO
+        Z = self.A@(self.W).T + self.Ones@(self.b).T   
 
         return Z
 
     def backward(self, dLdZ):
 
-        dZdA = self.W.T  # TODO
-        dZdW = (self.A)   # TODO
+        dZdA = self.W.T  
+        dZdW = (self.A)   
         dZdi = None
-        dZdb = self.Ones  # TODO
-        dLdA = dLdZ@(dZdA).T  # TODO
-        dLdW = (dLdZ).T @ dZdW  # TODO
-        dLdb = (dLdZ).T @ dZdb  # TODO
+        dZdb = self.Ones  
+        dLdA = dLdZ@(dZdA).T 
+        dLdW = (dLdZ).T @ dZdW  
+        dLdb = (dLdZ).T @ dZdb  
         dLdi = None
         self.dLdW = dLdW / self.N
         self.dLdb = dLdb / self.N
