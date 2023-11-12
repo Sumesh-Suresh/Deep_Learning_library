@@ -6,8 +6,6 @@ class Conv2d_stride1():
     def __init__(self, in_channels, out_channels,
                  kernel_size, weight_init_fn=None, bias_init_fn=None):
 
-        # Do not modify this method
-
         self.in_channels = in_channels
         self.out_channels = out_channels
         self.kernel_size = kernel_size
