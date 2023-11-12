@@ -45,7 +45,7 @@ class GreedySearchDecoder(object):
         blank = 0
         path_prob = 1
         sym_set_with_blank = ['-'] + self.symbol_set
-        # TODO:
+
         # 1. Iterate over sequence length - len(y_probs[0])
         # 2. Iterate over symbol probabilities
         # 3. update path probability, by multiplying with the current max probability
