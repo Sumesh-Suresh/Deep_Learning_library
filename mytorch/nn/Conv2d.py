@@ -63,9 +63,9 @@ class Conv2d_stride1():
             dLdA (np.array): (batch_size, in_channels, input_width, input_height)
         """
 
-        self.dLdW = np.zeros(self.W.shape,dtype='float64')  # TODO
-        self.dLdb = np.sum(dLdZ,axis=(0,2,3))  # TODO
-        self.dLdA = np.zeros(self.A.shape,dtype='float64') # TODO
+        self.dLdW = np.zeros(self.W.shape,dtype='float64')  
+        self.dLdb = np.sum(dLdZ,axis=(0,2,3))  
+        self.dLdA = np.zeros(self.A.shape,dtype='float64') 
 
         #convolving for dldw
         for i in range(self.dLdW.shape[2]):
@@ -96,8 +96,8 @@ class Conv2d():
         self.stride = stride
 
         # Initialize Conv2d() and Downsample2d() isntance
-        self.conv2d_stride1 = Conv2d_stride1(in_channels, out_channels, kernel_size, weight_init_fn, bias_init_fn)  # TODO
-        self.downsample2d = Downsample2d(self.stride)  # TODO
+        self.conv2d_stride1 = Conv2d_stride1(in_channels, out_channels, kernel_size, weight_init_fn, bias_init_fn)  
+        self.downsample2d = Downsample2d(self.stride) 
 
     def forward(self, A):
         """
