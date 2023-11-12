@@ -71,7 +71,7 @@ class RNNCell(object):
         self.x=x
         self.h_prev_t=h_prev_t
 
-        h_t = self.activation(self.x@self.W_ih.T+self.b_ih+self.h_prev_t@self.W_hh.T+self.b_hh) # TODO
+        h_t = self.activation(self.x@self.W_ih.T+self.b_ih+self.h_prev_t@self.W_hh.T+self.b_hh) 
 
         return h_t
 
@@ -106,20 +106,20 @@ class RNNCell(object):
         # 0) Done! Step backward through the tanh activation function.
         # Note, because of BPTT, we had to externally save the tanh state, and
         # have modified the tanh activation function to accept an optionally input.
-        dz = delta*self.activation.backward(state=h_t)# TODO   #jacobian
+        dz = delta*self.activation.backward(state=h_t)   #jacobian
         
         
         
         # 1) Compute the averaged gradients of the weights and biases
-        # self.dW_ih +=  h_prev_l*((dz*self.W_hh)*dz)/batch_size # TODO
+        # self.dW_ih +=  h_prev_l*((dz*self.W_hh)*dz)/batch_size 
         self.dW_ih += dz.T@h_prev_l/batch_size
-        self.dW_hh += dz.T@h_prev_t/batch_size# TODO
-        self.db_ih += np.mean(dz,axis=0) # TODO
-        self.db_hh += np.mean(dz,axis=0)# TODO
+        self.dW_hh += dz.T@h_prev_t/batch_size
+        self.db_ih += np.mean(dz,axis=0) 
+        self.db_hh += np.mean(dz,axis=0)
 
         # # 2) Compute dx, dh_prev_t
-        dx        =  dz@self.W_ih# TODO
-        dh_prev_t = dz@self.W_hh # TODO
+        dx        =  dz@self.W_ih
+        dh_prev_t = dz@self.W_hh 
 
         # print(' values of dw_ih',self.dW_ih[0])
         # print(' values of dw_hh',self.dW_hh[0])
@@ -134,4 +134,4 @@ class RNNCell(object):
 
         # 3) Return dx, dh_prev_t
         return dx, dh_prev_t
-        # raise NotImplementedError
+        
