@@ -11,7 +11,7 @@ class Flatten():
         """
         self.A=A
         print('shape of A in flatten function =', self.A.shape)
-        Z = np.reshape(A,(A.shape[0],A.shape[1]*A.shape[2])) # TODO
+        Z = np.reshape(A,(A.shape[0],A.shape[1]*A.shape[2])) 
         print('shape of z after flatten function =',Z.shape)
         return Z
 
@@ -23,6 +23,6 @@ class Flatten():
             dLdA (np.array): (batch size, in channels, in width)
         """
 
-        dLdA = dLdZ.reshape(self.A.shape)  # TODO
+        dLdA = dLdZ.reshape(self.A.shape)  
 
         return dLdA
