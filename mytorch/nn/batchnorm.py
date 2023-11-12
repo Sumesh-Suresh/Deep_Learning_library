@@ -25,33 +25,33 @@ class BatchNorm1d:
         So see what values you need to recompute when eval is False.
         """
         self.Z = Z
-        self.N = self.Z.shape[0] # TODO
-        self.M =  np.sum(self.Z, axis=0)/self.N # TODO
-        self.V = np.sum((self.Z-self.M)**2,axis=0)/self.N # TODO
+        self.N = self.Z.shape[0] 
+        self.M =  np.sum(self.Z, axis=0)/self.N 
+        self.V = np.sum((self.Z-self.M)**2,axis=0)/self.N 
 
         if eval == False:
             # training mode
-            self.NZ = (self.Z-self.M)/np.sqrt(self.V+self.eps) # TODO
-            self.BZ =  (self.NZ*self.BW)+self.Bb # TODO
+            self.NZ = (self.Z-self.M)/np.sqrt(self.V+self.eps) 
+            self.BZ =  (self.NZ*self.BW)+self.Bb 
 
-            self.running_M = self.alpha*self.running_M+(1-self.alpha)*self.M  # TODO
-            self.running_V = self.alpha*self.running_V+(1-self.alpha)*self.V # TODO
+            self.running_M = self.alpha*self.running_M+(1-self.alpha)*self.M  
+            self.running_V = self.alpha*self.running_V+(1-self.alpha)*self.V 
         else:
             # inference mode
-            self.NZ = (self.Z-self.running_M)/np.sqrt(self.running_V+self.eps)  # TODO
-            self.BZ =  (self.NZ*self.BW)+self.Bb # TODO
+            self.NZ = (self.Z-self.running_M)/np.sqrt(self.running_V+self.eps)  
+            self.BZ =  (self.NZ*self.BW)+self.Bb 
 
         return self.BZ
 
     def backward(self, dLdBZ):
 
-        self.dLdBW = np.sum((dLdBZ*self.NZ),axis=0) # TODO
-        self.dLdBb = np.sum(dLdBZ,axis=0) # TODO
+        self.dLdBW = np.sum((dLdBZ*self.NZ),axis=0) 
+        self.dLdBb = np.sum(dLdBZ,axis=0) 
 
-        dLdNZ = dLdBZ*self.BW  # TODO
-        dLdV = -0.5*(np.sum(dLdNZ*(self.Z-self.M)*((self.V+self.eps)**-(1.5)),axis=0)) # TODO
-        dNZdM= -((self.V+self.eps)**(-0.5))-0.5*(self.Z-self.M)*((self.V+self.eps)**(-1.5))*(-2/self.N)*np.sum(self.Z-self.M)# TODO
+        dLdNZ = dLdBZ*self.BW  
+        dLdV = -0.5*(np.sum(dLdNZ*(self.Z-self.M)*((self.V+self.eps)**-(1.5)),axis=0)) 
+        dNZdM= -((self.V+self.eps)**(-0.5))-0.5*(self.Z-self.M)*((self.V+self.eps)**(-1.5))*(-2/self.N)*np.sum(self.Z-self.M)
         dLdM=np.sum(dLdNZ*dNZdM,axis=0)
-        dLdZ = dLdNZ*((self.V+self.eps)**(-0.5))+dLdV*((2/self.N)*(self.Z-self.M))+dLdM/self.N # TODO
+        dLdZ = dLdNZ*((self.V+self.eps)**(-0.5))+dLdV*((2/self.N)*(self.Z-self.M))+dLdM/self.N
 
         return dLdZ
