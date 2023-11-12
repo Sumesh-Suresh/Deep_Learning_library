@@ -1,64 +1,68 @@
+# Do not import any additional 3rd party external libraries as they will not
+# be available to AutoLab and are not needed (or allowed)
 import numpy as np
 
+class Activation(object):
 
-class Identity:
+    """
+    Interface for activation functions (non-linearities).
+    """
 
-    def forward(self, Z):
+    def __init__(self):
+        self.state = None
 
-        self.A = Z
+    def __call__(self, x):
+        return self.forward(x)
 
-        return self.A
+    def forward(self, x):
+        raise NotImplemented
 
     def backward(self):
+        raise NotImplemented
 
-        dAdZ = np.ones(self.A.shape, dtype="float64")
+class Sigmoid(Activation):
 
-        return dAdZ
-
-
-class Sigmoid:
     """
-    On same lines as above:
-    Define 'forward' function
-    Define 'backward' function
-    Read the writeup for further details on Sigmoid.
+    Sigmoid activation function
     """
-    def forward(self, Z):
-        self.A= 1/(1+np.exp(-Z))
-        return self.A.astype('float64')
 
-    def backward(self):
-        dAdZ=self.A-np.square(self.A, dtype='float64')
-        return dAdZ
+    def __init__(self):
+        super(Sigmoid, self).__init__()
 
-class Tanh:
+    def forward(self, x):
+        self.state = (1 / (1 + np.exp(-x)))
+        return self.state
+
+    def backward(self,state=None):
+        if state is not None:
+            return state*(1-state)
+        else:
+            return (self.state) * (1 - self.state)
+
+
+class Tanh(Activation):
+
     """
-    On same lines as above:
-    Define 'forward' function
-    Define 'backward' function
-    Read the writeup for further details on Tanh.
-    """
-    def forward(self, Z):
-        self.A= np.tanh(Z, dtype='float64')
-        return self.A
+    Modified Tanh to work with BPTT.
+    The tanh(x) result has to be stored elsewhere otherwise we will
+    have to store results for multiple timesteps in this class for each cell,
+    which could be considered bad design.
 
-    def backward(self):
-        dAdZ= np.ones(self.A.shape, dtype="float64")-np.square(self.A, dtype='float64')
-        return dAdZ
-
-class ReLU:
+    Now in the derivative case, we can pass in the stored hidden state and
+    compute the derivative for that state instead of the "current" stored state
+    which could be anything.
     """
-    On same lines as above:
-    Define 'forward' function
-    Define 'backward' function
-    Read the writeup for further details on ReLU.
-    """
-    def forward(self, Z):
-        self.A= np.maximum(0,Z)
-        return self.A.astype(dtype='float64')
 
-    def backward(self):
-        dAdZ=self.A
-        dAdZ[dAdZ>0]=1
-        dAdZ[dAdZ<=0]=0
-        return dAdZ.astype(dtype='float64')
+    def __init__(self):
+        super(Tanh, self).__init__()
+
+    def forward(self, x):
+        self.state = np.tanh(x)
+        return self.state
+
+    def backward(self, state=None):
+        if state is not None:
+            return 1 - (state**2)
+        else:
+            return 1 - (self.state**2)
+            
