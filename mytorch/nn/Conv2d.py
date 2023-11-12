@@ -42,7 +42,7 @@ class Conv2d_stride1():
         Z = np.zeros((self.A.shape[0],
                     self.out_channels,
                     self.A.shape[2]-self.kernel_size+1,
-                    self.A.shape[3]-self.kernel_size+1), dtype='float64') # TODO
+                    self.A.shape[3]-self.kernel_size+1), dtype='float64') 
 
         for i in range(Z.shape[2]):
             for j in range(Z.shape[3]):
@@ -94,7 +94,7 @@ class Conv2d_stride1():
 class Conv2d():
     def __init__(self, in_channels, out_channels, kernel_size, stride,
                  weight_init_fn=None, bias_init_fn=None):
-        # Do not modify the variable names
+
         self.stride = stride
 
         # Initialize Conv2d() and Downsample2d() isntance
@@ -109,13 +109,12 @@ class Conv2d():
             Z (np.array): (batch_size, out_channels, output_width, output_height)
         """
         # Call Conv2d_stride1
-        # TODO
+       
         F = self.conv2d_stride1.forward(A)
 
         # downsample
-        Z = self.downsample2d.forward(F) # TODO
-        # print(' shape of Z after downsample ',Z.shape)
-        # print('stride shape', self.stride)
+        Z = self.downsample2d.forward(F) 
+        
         return Z
 
     def backward(self, dLdZ):
@@ -127,10 +126,9 @@ class Conv2d():
         """
 
         # Call downsample1d backward
-        # TODO
         B = self.downsample2d.backward(dLdZ)
         
         # Call Conv2d_stride1 backward
-        dLdA = self.conv2d_stride1.backward(B)# TODO
+        dLdA = self.conv2d_stride1.backward(B)
         
         return dLdA
