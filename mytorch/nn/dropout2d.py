@@ -1,6 +1,3 @@
-# Do not import any additional 3rd party external libraries as they will not
-# be available to AutoLab and are not needed (or allowed)
-
 import numpy as np
 
 
@@ -28,14 +25,7 @@ class Dropout2d(object):
         batch, inp_channel,_,_ = x.shape
         
         if not eval:
-            # TODO: Generate mask and apply to x
-            # for i in range(batch):
-            #     self.mask=np.random.binomial(n=1,p=1-self.p,size=inp_channel)
-            #     print(self.mask)
-            #     for j in range(inp_channel):
-            #       if self.mask[j]==0:
-            #         x[i,j,:,:]=np.zeros(x[i,j,:,:].shape,dtype='float64')
-            # x=x/(1-self.p)
+            
             self.mask = np.random.binomial(1, 1 - self.p, size=(x.shape[0], x.shape[1], 1, 1))
             self.mask = np.tile(self.mask, (1, 1, x.shape[2], x.shape[3]))
             self.x=x * self.mask / (1 - self.p)
@@ -45,8 +35,7 @@ class Dropout2d(object):
         return self.x
 
           
-        # else:
-        #     self.x=self.x          
+        
         
 
     def backward(self, delta):
