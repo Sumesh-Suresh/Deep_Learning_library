@@ -36,7 +36,7 @@ class Upsample1d():
         Return:
             dLdA (np.array): (batch_size, in_channels, input_width)
         """
-        dLdA = np.zeros(self.A.shape, dtype='float64') # TODO
+        dLdA = np.zeros(self.A.shape, dtype='float64')
         for i in range(dLdA.shape[0]): # iteration batches
             for j in range(dLdA.shape[1]):
                 dLdA[i,j,:]=dLdZ[i,j,::self.upsampling_factor]
