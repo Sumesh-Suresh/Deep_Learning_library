@@ -33,7 +33,7 @@ class Conv1d_stride1():
         """
         self.A = A
 
-        Z = np.zeros((self.A.shape[0],self.out_channels,self.A.shape[2]-self.kernel_size+1),dtype='float64') # TODO
+        Z = np.zeros((self.A.shape[0],self.out_channels,self.A.shape[2]-self.kernel_size+1),dtype='float64') 
         
         #convolusion for Z
         for i in range(Z.shape[2]):
@@ -88,7 +88,7 @@ class Conv1d_stride1():
 class Conv1d():
     def __init__(self, in_channels, out_channels, kernel_size, stride,
                  weight_init_fn=None, bias_init_fn=None):
-        # Do not modify the variable names
+        
 
         self.stride = stride
 
