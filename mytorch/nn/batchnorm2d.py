@@ -1,6 +1,3 @@
-# Do not import any additional 3rd party external libraries as they will not
-# be available to AutoLab and are not needed (or allowed)
-
 import numpy as np
 
 
@@ -39,17 +36,17 @@ class BatchNorm2d:
 
         self.Z = Z
         # print('shape of Z',self.Z.shape)
-        self.N = self.Z.shape[0]*self.Z.shape[2]*self.Z.shape[3] # TODO
-        self.M = np.sum(self.Z,axis=(0,2,3),keepdims=True)/self.N# TODO
-        self.V =  np.sum((self.Z-self.M)**2,axis=(0,2,3),keepdims=True)/self.N # TODO
+        self.N = self.Z.shape[0]*self.Z.shape[2]*self.Z.shape[3] 
+        self.M = np.sum(self.Z,axis=(0,2,3),keepdims=True)/self.N
+        self.V =  np.sum((self.Z-self.M)**2,axis=(0,2,3),keepdims=True)/self.N 
        
         if eval == False:
             # training mode
-            self.NZ = (self.Z-self.M)/np.sqrt(self.V+self.eps) # TODO
-            self.BZ =  (self.NZ*self.BW)+self.Bb # TODO
+            self.NZ = (self.Z-self.M)/np.sqrt(self.V+self.eps) 
+            self.BZ =  (self.NZ*self.BW)+self.Bb 
             # print('shape of NZ,x',self.NZ.shape,self.M.shape)
-            self.running_M = self.alpha*self.running_M+(1-self.alpha)*self.M  # TODO
-            self.running_V = self.alpha*self.running_V+(1-self.alpha)*self.V # TODO
+            self.running_M = self.alpha*self.running_M+(1-self.alpha)*self.M  
+            self.running_V = self.alpha*self.running_V+(1-self.alpha)*self.V 
 
             
 
