@@ -20,7 +20,6 @@ class MSELoss:
         sse = (np.ones((self.N,1)).T)@se@np.ones((self.C,1)) # TODO
         mse = sse/(2*self.N*self.C)  # TODO
 
-        print('mse =',mse)
         # print('se',se.shape)
         # print('N',self.N)
         # print('C',self.C)
@@ -55,9 +54,9 @@ class CrossEntropyLoss:
 
         self.softmax = np.array([np.exp(i)/sum(np.exp(i)) for i in self.A]) # TODO
         
-        print('Y',self.Y.shape)
-        print('softmax',self.softmax.shape)
-        print('Ones C',Ones_C.shape)
+        # print('Y',self.Y.shape)
+        # print('softmax',self.softmax.shape)
+        # print('Ones C',Ones_C.shape)
         crossentropy = -1*(self.Y*np.log(self.softmax))@Ones_C # TODO
         sum_crossentropy = np.dot(Ones_N.T,crossentropy) # TODO
         L = sum_crossentropy / N
